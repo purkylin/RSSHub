@@ -65,12 +65,15 @@ async function handler(ctx) {
         .map((thing) => {
             thing = $(thing);
 
+            const titleStr = thing.find('.age').attr('title') ?? thing.next().find('.age').attr('title');
+            const isoDate = titleStr?.split(' ')[0];
+
             const item = {
                 guid: thing.attr('id'),
                 title: thing.find('.titleline').children('a').text(),
                 category: thing.find('.sitestr').text(),
                 author: thing.next().find('.hnuser').text(),
-                pubDate: parseDate(thing.find('.age').attr('title') ?? thing.next().find('.age').attr('title')),
+                pubDate: parseDate(isoDate),
 
                 link: '',
                 origin: thing.find('.titleline').children('a').attr('href'),
